@@ -1,5 +1,9 @@
-ZendSkeletonApplication
+Zendbackend Skeleton Application
 =======================
+
+WARNING
+------------
+THIS APPLICATION IS STILL IN DEVELOPMENT STAGE. DO NOT USE IT TO DEVELOP YOUR APPLICATION.
 
 Introduction
 ------------
