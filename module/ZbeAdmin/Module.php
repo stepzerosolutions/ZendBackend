@@ -12,6 +12,9 @@ namespace ZbeAdmin;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
+use ZbeAdmin\Model\ZbeadminRoute;
+use Zend\Debug\Debug;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -30,10 +33,29 @@ class Module implements AutoloaderProviderInterface
         );
     }
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
+	/**
+	 * get module.config.php data and assign local admin url controller details to module config
+	 *
+	 *
+	 * @param load module.config.php and config/autoloadr/local.php
+	 *
+	 * @return module configuration details array
+	 */
+	public function getConfig(){
+		$admin = new ZbeadminRoute();
+		$config = include __DIR__ . '../../../config/autoload/local.php';
+		
+		$admincontroller_name = $admin->getAdminControllerBylocalConfig($config);
+		
+		if( !file_exists( __DIR__ . '../../../config/autoload/local.php') ||  !$admincontroller_name ){
+			return include __DIR__ . '/config/module.config.php';
+		}
+
+		$moduleConfig = include __DIR__ . '/config/module.config.php';
+		$adminModuleConfig = $admin->getModuleconfig($moduleConfig);
+		$returnconfig = $admin->getchangedRouterConfig();
+		return $returnconfig;
+	}
 
     public function onBootstrap(MvcEvent $e)
     {
@@ -42,5 +64,14 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+    }
+    
+    
+    public function init( ModuleManager $moduleManager){
+        $sharedEvents=$moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e){
+            $controller = $e->getTarget();
+            $controller->layout('admin/layout');
+        }, 100 );
     }
 }

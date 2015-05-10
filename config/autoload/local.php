@@ -12,4 +12,20 @@
  */
 
 return array(
+	   'production' => array(
+	         'webhost' => 'localhost',
+			 'admin_dir' => 'zbeadmin',
+			 'encription_key' => '6c20eca6d595a5f485976fd7063a4b75',
+				'db' => array(
+						'params' =>
+						array (
+								'driver' => 'Mysqli',
+								'host' => 'localhost',
+								'username' => 'root',
+								'password' => '',
+								'dbname' => 'zbe',
+								'prefix' => 'bze_',
+						),
+				),
+		)
 );

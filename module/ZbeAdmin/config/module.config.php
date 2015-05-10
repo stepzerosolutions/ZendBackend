@@ -2,21 +2,21 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'ZbeAdmin\Controller\Index' => 'ZbeAdmin\Controller\IndexController',
+            'Zbeadmin\Controller\Admin' => 'ZbeAdmin\Controller\AdminController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'zbe-admin' => array(
+            'zbeadmin' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/index',
+                    'route'    => '/zbeadmin',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'ZbeAdmin\Controller',
-                        'controller'    => 'Index',
+                        '__NAMESPACE__' => 'Zbeadmin\Controller',
+                        'controller'    => 'Admin',
                         'action'        => 'index',
                     ),
                 ),
@@ -46,5 +46,9 @@ return array(
         'template_path_stack' => array(
             'ZbeAdmin' => __DIR__ . '/../view',
         ),
+        'template_map' => array(
+            'admin/layout' => __DIR__ . '/../view/layout/cleanpage.phtml',
+            'zbe-admin/admin/index' => __DIR__ . '/../view/zbe-admin/index/index.phtml',
+        )
     ),
 );
