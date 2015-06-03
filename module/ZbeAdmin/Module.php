@@ -14,7 +14,6 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
 use ZbeAdmin\Model\ZbeadminRoute;
-use Zend\Debug\Debug;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -51,7 +50,7 @@ class Module implements AutoloaderProviderInterface
 			return include __DIR__ . '/config/module.config.php';
 		}
 
-		$moduleConfig = include __DIR__ . '/config/module.config.php';
+		$moduleConfig = include __DIR__ . '/config/module.config.php';var_dump($moduleConfig);
 		$adminModuleConfig = $admin->getModuleconfig($moduleConfig);
 		$returnconfig = $admin->getchangedRouterConfig();
 		return $returnconfig;
