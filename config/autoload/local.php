@@ -14,7 +14,7 @@
 return array(
 	   'production' => array(
 	         'webhost' => 'localhost',
-			 'admin_dir' => 'zbeadmin',
+			 'admin_dir' => 'bspecad',
 			 'encription_key' => '6c20eca6d595a5f485976fd7063a4b75',
 				'db' => array(
 						'params' =>
@@ -24,7 +24,7 @@ return array(
 								'username' => 'root',
 								'password' => '',
 								'dbname' => 'zbe',
-								'prefix' => 'bze_',
+								'prefix' => 'zbe_',
 						),
 				),
 		)

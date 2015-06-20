@@ -1,3 +1,23 @@
-<strong>Module:</strong>        ZbeAdmin &raquo;
-<strong>Controller:</strong>    Index &raquo;
-<strong>Action:</strong>        index
+<div class="row">
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+                <?php
+                $form->prepare();
+                $form->setAttribute('action', $this->url('zbeadmin/login'));
+                echo $this->form()->openTag($form);
+                ?>
+                <?php echo $this->formInput( $form->get('secureprefix')->setAttribute( 'value' , $this->SecureKey() ) ); ?>
+              <div class="form-group">
+                
+                <label for="exampleInputEmail1">Username</label>
+                <?php echo $this->formelement( $form->get('userlogin') )?>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <?php echo $this->formelement( $form->get('pw') )?>
+              </div>
+              <button type="submit" class="btn btn-default">Login</button>
+            <?php echo $this->form()->closeTag($form)?>
+        </div>
+    </div>
+</div>

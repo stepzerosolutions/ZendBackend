@@ -12,6 +12,11 @@ namespace ZbeCore;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use ZbeCore\Model\Tables\ConfigurationTable;
+use ZbeCore\Model\Tables\Configuration;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -42,5 +47,25 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+    }
+    
+    public function getServiceConfig(){
+        return array(
+            'factories' => array(
+                'layoutManager' => 'ZbeCore\Service\LayoutFactory',
+                'ConfigurationTable' => function($sm){
+                    $tableGateway = $sm->get('ConfigurationGateway');
+                    return new ConfigurationTable($tableGateway);
+                },
+                'ConfigurationGateway' => function($sm){
+                    $config = $sm->get('config');
+                    $adapter = new Adapter($config["production"]["db"]["params"]);
+                    $resultSetPrototype = new ResultSet();
+                    $configuration = new Configuration();
+                    $resultSetPrototype->setArrayObjectPrototype( new Configuration() );
+                    return new TableGateway($config["production"]["db"]["params"]["prefix"] . 'configuration', $adapter, null, $resultSetPrototype);
+                },
+            )
+        );
     }
 }

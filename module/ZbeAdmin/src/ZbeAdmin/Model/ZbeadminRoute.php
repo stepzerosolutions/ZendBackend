@@ -1,10 +1,16 @@
 <?php
 namespace ZbeAdmin\Model;
 
+/*
+*   DEPRECATED CLASS
+*   
+*   */
+
 use Zend\Mvc\MvcEvent;
 /**
  *
  * @author Don Udugala
+ * This class is deprecated
  *        
  */
 class ZbeadminRoute
@@ -80,7 +86,6 @@ class ZbeadminRoute
         $this->moduleConfig['controllers']["invokables"][$controller.'\Controller\Admin'] = 'ZbeAdmin\Controller\AdminController';
         $this->moduleConfig['router']["routes"][$this->config['production']['admin_dir']] = $this->moduleConfig['router']["routes"]["zbeadmin"];
         $this->moduleConfig['router']["routes"][$this->config['production']['admin_dir']]["options"]["route"] = '/'.$this->config['production']['admin_dir'];
-        //$this->moduleConfig['router']["routes"][$this->config['production']['admin_dir']]["options"]["defaults"]["controller"] = $controller .'\Controller\Admin';
         $this->moduleConfig['router']["routes"][$this->config['production']['admin_dir']]["options"]["defaults"]["action"] = 'index';
         	
         if( isset($this->moduleConfig['navigation']["admin_topnavigation"]) ){
@@ -90,10 +95,6 @@ class ZbeadminRoute
             }
             endforeach;
         }
-        	
-        //$this->moduleConfig['navigation']["admin_topnavigation"] = $return;
-        //unset($this->moduleConfig['controllers']["invokables"]['ZbeAdmin\Controller\Admin']);
-        //unset($this->moduleConfig['router']["routes"]["zbeadmin"]);
         return $this->moduleConfig;
     }
     
@@ -127,5 +128,3 @@ class ZbeadminRoute
         return $array;
     }
 }
-
-?>

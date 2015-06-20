@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<zbeadmin_index>
+		<stylesheet>
+			<name>bootstrapmincss</name>
+			<href>public/css/bootstrap.min.css</href>
+			<order>10000</order>
+			<external>1</external>
+			<protocol>free</protocol>
+		</stylesheet>
+		<stylesheet>
+			<name>fontawesome</name>
+			<href>fonts/css/font-awesome.min.css</href>
+			<order>1000</order>
+			<external>1</external>
+			<protocol>free</protocol>
+		</stylesheet>
+		<stylesheet>
+			<name>animatecss</name>
+			<href>css/animate.min.css</href>
+			<order>1000</order>
+			<external>1</external>
+			<protocol>free</protocol>
+		</stylesheet>
+		<stylesheet>
+			<name>zbeadminindexcustomcss</name>
+			<href>css/custom.css</href>
+			<order>1000</order>
+			<external>1</external>
+			<protocol>free</protocol>
+		</stylesheet>
+		<stylesheet>
+			<name>zbeadminindexicheckgreen</name>
+			<href>css/icheck/flat/green.css</href>
+			<order>1000</order>
+			<external>1</external>
+			<protocol>free</protocol>
+		</stylesheet>
+		<headScript>
+			<name>jqueryminjs</name>
+			<src>js/jquery.min.js</src>
+			<order>994</order>
+			<external>1</external>
+		</headScript>
+	</zbeadmin_index>
+</config>

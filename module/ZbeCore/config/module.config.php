@@ -47,4 +47,11 @@ return array(
             'ZbeCore' => __DIR__ . '/../view',
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'SecureKey' => 'ZbeCore\Helper\SecureKey',
+            'Success'   => 'ZbeCore\Helper\Success',
+            'Error'   => 'ZbeCore\Helper\Error',
+            )
+        )
 );

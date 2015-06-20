@@ -13,7 +13,12 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
-use ZbeAdmin\Model\ZbeadminRoute;
+use ZbeAdmin\Model\ZbeadminRouteManager;
+use Zend\Db\Adapter\Adapter;
+use ZbeAdmin\Model\Tables\Administrator;
+use ZbeAdmin\Model\Tables\AdministratorTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -41,19 +46,14 @@ class Module implements AutoloaderProviderInterface
 	 * @return module configuration details array
 	 */
 	public function getConfig(){
-		$admin = new ZbeadminRoute();
-		$config = include __DIR__ . '../../../config/autoload/local.php';
-		
-		$admincontroller_name = $admin->getAdminControllerBylocalConfig($config);
-		
-		if( !file_exists( __DIR__ . '../../../config/autoload/local.php') ||  !$admincontroller_name ){
-			return include __DIR__ . '/config/module.config.php';
-		}
-
-		$moduleConfig = include __DIR__ . '/config/module.config.php';var_dump($moduleConfig);
-		$adminModuleConfig = $admin->getModuleconfig($moduleConfig);
-		$returnconfig = $admin->getchangedRouterConfig();
-		return $returnconfig;
+	    $config = include __DIR__ . '../../../config/autoload/local.php';
+	    $module_config = include __DIR__ . '/config/module.config.php';
+	    if( isset($config["production"]["admin_dir"]) && !empty($config["production"]["admin_dir"]) ) {
+		  $adminRouteManager = new ZbeadminRouteManager();
+		  $abs = $adminRouteManager->changeRoute($config["production"]["admin_dir"], $module_config );//var_dump($abs["router"]["routes"]);
+		  return $abs;
+	    }
+        return $module_config; 
 	}
 
     public function onBootstrap(MvcEvent $e)
@@ -72,5 +72,31 @@ class Module implements AutoloaderProviderInterface
             $controller = $e->getTarget();
             $controller->layout('admin/layout');
         }, 100 );
+    }
+    
+    
+    public function getServiceConfig(){
+        return array(
+            'factories' => array(
+                'AdministratorTable' => function($sm){
+                    $tableGateway = $sm->get('AdministratorGateway');
+                    return new AdministratorTable($tableGateway);
+                },
+                'AdministratorGateway' => function($sm){
+                    //$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $config = $sm->get('config');
+                    $adapter = new Adapter($config["production"]["db"]["params"]);
+                    $resultSetPrototype = new ResultSet();
+                    $administrator = new Administrator();
+                    $resultSetPrototype->setArrayObjectPrototype( new Administrator() );
+                    return new TableGateway($config["production"]["db"]["params"]["prefix"] . 'administrator', $adapter, null, $resultSetPrototype);
+                },
+                'DbAdapter' => function($sm){
+                    $config = $sm->get('config');
+                    $adapter = new Adapter($config["production"]["db"]["params"]);
+                    return $adapter;
+                },
+            )
+        );
     }
 }
