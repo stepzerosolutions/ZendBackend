@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<zbeadmin_index>
+	<default>
+		<stylesheet>
+			<name>defaultzbadmin</name>
+			<href>fonts/css/defaultzbadmin.css</href>
+			<order>15</order>
+			<protocol>free</protocol>
+		</stylesheet>
+		<headScript>
+			<name>defaultzbadmin</name>
+			<src>js/defaultzbadmin.min.js</src>
+			<order>200</order>
+			<external>1</external>
+		</headScript>
+	</default>
+	<zbeadmin_dashboard>
 		<stylesheet>
 			<name>bootstrapmincss</name>
 			<href>public/css/bootstrap.min.css</href>
 			<order>10000</order>
-			<external>1</external>
 			<protocol>free</protocol>
 		</stylesheet>
 		<stylesheet>
@@ -25,7 +38,7 @@
 		<stylesheet>
 			<name>zbeadminindexcustomcss</name>
 			<href>css/custom.css</href>
-			<order>1000</order>
+			<order>10</order>
 			<external>1</external>
 			<protocol>free</protocol>
 		</stylesheet>
@@ -42,5 +55,5 @@
 			<order>994</order>
 			<external>1</external>
 		</headScript>
-	</zbeadmin_index>
+	</zbeadmin_dashboard>
 </config>

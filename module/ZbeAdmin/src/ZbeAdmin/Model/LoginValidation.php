@@ -1,7 +1,7 @@
 <?php
 namespace ZbeAdmin\Model;
 
-use Zend\Inputfilter\InputFilter;
+use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 

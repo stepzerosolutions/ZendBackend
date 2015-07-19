@@ -52,7 +52,6 @@ class Module implements AutoloaderProviderInterface
     public function getServiceConfig(){
         return array(
             'factories' => array(
-                'layoutManager' => 'ZbeCore\Service\LayoutFactory',
                 'ConfigurationTable' => function($sm){
                     $tableGateway = $sm->get('ConfigurationGateway');
                     return new ConfigurationTable($tableGateway);

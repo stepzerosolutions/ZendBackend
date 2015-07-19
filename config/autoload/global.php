@@ -16,7 +16,8 @@ return array(
 		'theme' => 'default',
         'cache' => true,
         'clear_config_global' => true,      // has to be false for preformance reasons
-        'theme_admin' => 'default',
+        'theme_front' => 'default',
+        'theme_admin' => 'zbe',
 		'backend' => false,
 		'page_title' => 'Zendbackend Project by StepZero',
 		'log_message' => DIRECTORY_SEPARATOR .'data'.DIRECTORY_SEPARATOR.'log'.DIRECTORY_SEPARATOR.'message.log',

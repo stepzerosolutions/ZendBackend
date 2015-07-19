@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'AdminController' => 'ZbeAdmin\Controller\AdminController',
+            'zbeadmin' => 'ZbeAdmin\Controller\AdminController',
         ),
     ),
     'router' => array(
@@ -13,7 +13,7 @@ return array(
                     // Change this to something specific to your module
                     'route'    => '/zbeadmin',
                     'defaults' => array(
-                        'controller'    => 'AdminController',
+                        'controller'    => 'zbeadmin',
                         'action'        => 'index',
                     ),
                 ),

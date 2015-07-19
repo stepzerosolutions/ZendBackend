@@ -10,15 +10,14 @@
 namespace ZbeAdmin;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\ModuleManager\ModuleManager;
 use ZbeAdmin\Model\ZbeadminRouteManager;
 use Zend\Db\Adapter\Adapter;
 use ZbeAdmin\Model\Tables\Administrator;
 use ZbeAdmin\Model\Tables\AdministratorTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+
 
 class Module implements AutoloaderProviderInterface
 {
@@ -56,28 +55,34 @@ class Module implements AutoloaderProviderInterface
         return $module_config; 
 	}
 
-    public function onBootstrap(MvcEvent $e)
+    public function onBootstrap(MvcEvent $event)
     {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
-        $eventManager        = $e->getApplication()->getEventManager();
-        $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
+        $app = $event->getApplication();
+        $app->getEventManager()->attach('render', array($this, 'processAdminServices'));
     }
     
-    
-    public function init( ModuleManager $moduleManager){
-        $sharedEvents=$moduleManager->getEventManager()->getSharedManager();
-        $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e){
-            $controller = $e->getTarget();
-            $controller->layout('admin/layout');
-        }, 100 );
+
+    /**
+     * Process Administrator services Locad admin theme.
+     * Modules can load admin theme by loading adminthemeServices 
+     */
+    public function processAdminServices(MvcEvent $event){
+        $routeMatch = $event->getRouteMatch();
+        if( $routeMatch ) {
+            $controller = strtolower(  $routeMatch->getParam( 'controller' ) );
+            if( $controller==="zbeadmin" ){
+                $serviceManager = $event->getApplication()->getServiceManager();
+                $adminthemeServices = $serviceManager->get('adminthemeServices');
+                $adminthemeServices->setAdminTheme();
+            }
+        }
     }
-    
+
     
     public function getServiceConfig(){
         return array(
             'factories' => array(
+                'adminthemeServices' => 'ZbeAdmin\Service\ZbeadminServicesFactory',
                 'AdministratorTable' => function($sm){
                     $tableGateway = $sm->get('AdministratorGateway');
                     return new AdministratorTable($tableGateway);
