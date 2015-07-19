@@ -4,7 +4,8 @@
   "version" : "1.0.0",
   "require" : {
     "php" : ">=5.3.3",
-    "zendframework/zendframework" : "~2.4"
+    "zendframework/zendframework" : "~2.4",
+    "stepzerosolutions/zfthemes" : "~1.0.0"
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "framework", "zf2" ],
