@@ -1,7 +1,7 @@
 {
   "name" : "stepzerosolutions/zendbackend",
   "description" : "Skeleton Application for ZF2",
-  "version" : "1.0.0",
+  "version" : "1.0.1",
   "require" : {
     "php" : ">=5.3.3",
     "zendframework/zendframework" : "~2.4",
